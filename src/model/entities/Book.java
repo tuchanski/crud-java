@@ -1,6 +1,6 @@
-package entities;
+package model.entities;
 
-import entities.enums.Genre;
+import model.entities.enums.Genre;
 
 import java.util.Objects;
 

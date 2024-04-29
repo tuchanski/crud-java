@@ -1,6 +1,9 @@
-package entities;
+package model.entities;
 
-import entities.enums.Genre;
+import model.entities.enums.Genre;
+import model.exceptions.BookException;
+import model.exceptions.BookNotFoundException;
+import model.exceptions.DuplicateBookException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +23,7 @@ public class Library {
         }
     }
 
+    //Added exception
     public void getBookById(Integer id){
         for (Book book : this.stock){
             if (book.getId() == id){
@@ -27,29 +31,31 @@ public class Library {
                 return;
             }
         }
-        System.out.println("Book with ID #" + id + " not found.");
+        throw new BookNotFoundException("Book with ID #" + id + " not found.");
     }
 
+    //Added Exception
     public void addBook(Book book){
-        if (!this.stock.contains(book)){
-            this.stock.add(book);
-            System.out.println("Book added successfully.");
+        for (Book existingBook : this.stock){
+            if (existingBook.getId() == book.getId()){
+                throw new DuplicateBookException("Book with ID #" + book.getId() + " already exists.");
+            }
         }
-        else{
-            System.out.println("Book already exists.");
-        }
+        this.stock.add(book);
     }
 
+    //Added Exception
     public void removeBookById(Integer id){
         boolean removed = this.stock.removeIf(book -> book.getId() == id);
         if (removed){
             System.out.println("Book #" + id + " removed successfully.");
         }
         else{
-            System.out.println("Book #" + id + " not found.");
+            throw new BookNotFoundException("Book with ID #" + id + " not found.");
         }
     }
 
+    //Added Exception
     public void updateBook(Integer id){
 
         boolean updatedAttempt = false;
@@ -150,7 +156,7 @@ public class Library {
             }
         }
         if (!updatedAttempt){
-            System.out.println("Book #" + id + " not found.");
+            throw new BookNotFoundException("Book with ID #" + id + " not found.");
         }
     }
 
