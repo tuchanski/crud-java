@@ -51,9 +51,11 @@ public class Library {
     }
 
     public void updateBook(Integer id){
+
+        boolean updatedAttempt = false;
         for (Book book : this.stock){
             if (book.getId().equals(id)){
-
+                updatedAttempt = true;
                 System.out.println("- Updating Book -" +
                         "\n[1] - Title" + "\n[2] - Author" + "\n[3] - Year" +
                         "\n[4] - Number of Pages" + "\n[5] - Genre" + "\n[0] - Exit Update Mode");
@@ -145,9 +147,10 @@ public class Library {
                     default:
                         System.out.println("- Error: Please, select a valid option. -");
                 }
-
-
             }
+        }
+        if (!updatedAttempt){
+            System.out.println("Book #" + id + " not found.");
         }
     }
 
