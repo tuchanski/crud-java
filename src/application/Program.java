@@ -18,13 +18,14 @@ public class Program {
                 "You can add, remove and search books easily. (＾-＾)");
         int menu;
         do {
-            System.out.println("\nWhat would you like to do?\n" +
-                    "1. Insert Book\n" +
-                    "2. Remove Book\n" +
-                    "3. Update Book\n" +
-                    "4. Search Book\n" +
-                    "5. Book Stock List\n" +
-                    "0. Exit");
+            System.out.println("""
+                    \nWhat would you like to do?
+                    1. Insert Book
+                    2. Remove Book
+                    3. Update Book
+                    4. Search Book
+                    5. Book Stock List
+                    0. Exit""");
 
             System.out.print("\nEnter your choice: ");
             menu = input.nextInt();
@@ -108,8 +109,13 @@ public class Program {
                     break;
 
                 case 5:
-                    System.out.println("\n- Lapa's Library Stock -");
-                    library.getBooks();
+                    System.out.println("\n- Library Stock -");
+                    try{
+                        library.getBooks();
+                    }
+                    catch (BookException | BookNotFoundException e) {
+                        System.out.println("Error: " + e.getMessage());
+                    }
                     break;
 
                 case 0:

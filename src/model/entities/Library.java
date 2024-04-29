@@ -1,7 +1,6 @@
 package model.entities;
 
 import model.entities.enums.Genre;
-import model.exceptions.BookException;
 import model.exceptions.BookNotFoundException;
 import model.exceptions.DuplicateBookException;
 
@@ -18,8 +17,14 @@ public class Library {
     private List<Book> stock = new ArrayList<Book>();
 
     public void getBooks(){
-        for (Book book : this.stock){
-            System.out.println(book);
+
+        if (stock.isEmpty()){
+            throw new BookNotFoundException("There's no books in the library.");
+        }
+        else{
+            for (Book book : this.stock){
+                System.out.println(book);
+            }
         }
     }
 
@@ -62,9 +67,9 @@ public class Library {
         for (Book book : this.stock){
             if (book.getId().equals(id)){
                 updatedAttempt = true;
-                System.out.println("- Updating Book -" +
+                System.out.println("\n- Updating Book -" +
                         "\n[1] - Title" + "\n[2] - Author" + "\n[3] - Year" +
-                        "\n[4] - Number of Pages" + "\n[5] - Genre" + "\n[0] - Exit Update Mode");
+                        "\n[4] - Number of Pages" + "\n[5] - Genre" + "\n[0] - Return to Menu");
 
                 int mode = input.nextInt();
                 switch(mode){
