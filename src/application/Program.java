@@ -85,7 +85,6 @@ public class Program {
                     System.out.println("\n- Update Book Mode -");
                     System.out.print("- Enter ID: ");
                     int updateId = input.nextInt();
-
                     try {
                         library.updateBook(updateId);
                     }

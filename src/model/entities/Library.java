@@ -15,7 +15,7 @@ public class Library {
 
     public Library(){}
 
-    private List<Book> stock = new ArrayList<Book>();
+    private final List<Book> stock = new ArrayList<>();
 
     public void getBooks(){
 
@@ -29,10 +29,9 @@ public class Library {
         }
     }
 
-    //Added exception
     public void getBookById(Integer id){
         for (Book book : this.stock){
-            if (book.getId() == id){
+            if (book.getId().equals(id)){
                 System.out.println(book);
                 return;
             }
@@ -40,19 +39,17 @@ public class Library {
         throw new BookNotFoundException("Book with ID #" + id + " not found.");
     }
 
-    //Added Exception
     public void addBook(Book book){
         for (Book existingBook : this.stock){
-            if (existingBook.getId() == book.getId()){
+            if (existingBook.getId().equals(book.getId())){
                 throw new DuplicateBookException("Book with ID #" + book.getId() + " already exists.");
             }
         }
         this.stock.add(book);
     }
 
-    //Added Exception
     public void removeBookById(Integer id){
-        boolean removed = this.stock.removeIf(book -> book.getId() == id);
+        boolean removed = this.stock.removeIf(book -> book.getId().equals(id));
         if (removed){
             System.out.println("Book #" + id + " removed successfully.");
         }
@@ -61,118 +58,118 @@ public class Library {
         }
     }
 
-    //Added Exception
-    public void updateBook(Integer id){
+    // Update methods
 
-        boolean updatedAttempt = false;
+    public void updateBook(Integer id){
+        boolean idChecker = false;
+        int updateMenu;
         for (Book book : this.stock){
             if (book.getId().equals(id)){
-                updatedAttempt = true;
-                System.out.println("\n- Updating Book -" +
-                        "\n[1] - Title" + "\n[2] - Author" + "\n[3] - Year" +
-                        "\n[4] - Number of Pages" + "\n[5] - Genre" + "\n[0] - Return to Menu");
+                idChecker = true;
+                System.out.println("- Updating Book #" + id + " -");
+                System.out.println("""
+                        [1] - Update Title
+                        [2] - Update Author
+                        [3] - Update Year\
+
+                        [4] - Update Pages
+                        [5] - Update Genre
+                        [0] - Quit Update Menu""");
                 System.out.print("\nEnter your choice: ");
+                updateMenu = input.nextInt();
 
-                int mode = input.nextInt();
-                switch(mode){
-                    case 0:
-                        System.out.println("- Exiting from Update Mode -");
-                        return;
+                switch (updateMenu){
                     case 1:
-                        updateTitle(id);
-
+                        updateTitle(id, book);
+                        break;
                     case 2:
-                        try{
-                            System.out.println("- Changing Author from Book #" + id + " -");
-                            System.out.print("\n- Enter new author: ");
-                            String author = input.next();
-
-                            if (author != null && !author.equals(book.getAuthor()) && !author.isEmpty()){
-                                book.setAuthor(author);
-                                System.out.println("- Changed Author to Book #" + id + " -");
-                                break;
-                            }
-
-                        }
-                        catch(BookException e){
-                            System.out.println("- Error: " + e.getMessage());
-                            break;
-                        }
-
+                        updateAuthor(id, book);
+                        break;
                     case 3:
-                        try{
-                            System.out.println("- Changing Year from Book #" + id + " -");
-                            System.out.print("\n- Enter new year: ");
-                            int year = input.nextInt();
-                            if (year != book.getYear() && year > 0){
-                                book.setYear(year);
-                                break;
-                            }
-                        }
-                        catch(BookException e){
-                            System.out.println("- Error: " + e.getMessage());
-                        }
-
+                        updateYear(id, book);
+                        break;
                     case 4:
-                        try{
-                            System.out.println("- Changing Number of Pages from Book #" + id + " -");
-                            System.out.print("\n- Enter new number of pages: ");
-                            int pages = input.nextInt();
-                            if (pages != book.getNumberOfPages() && pages > 0){
-                                book.setNumberOfPages(pages);
-                                break;
-                            }
-                        }
-                        catch(BookException e){
-                            System.out.println("- Error: " + e.getMessage());
-                        }
-
+                        updatePages(id, book);
+                        break;
                     case 5:
-                        try{
-                            System.out.println("- Changing Genre from Book #" + id + " -");
-                            System.out.print("\n- Enter new genre: ");
-                            String GenreStr = input.next();
-
-                            Genre genre = Genre.valueOf(GenreStr.toUpperCase());
-                            book.setGenre(genre);
-                            break;
-                        }
-                        catch(BookException e){
-                            System.out.println("- Error: " + e.getMessage());
-                            break;
-                        }
-
+                        updateGenre(id, book);
+                        break;
+                    case 0:
+                        break;
                     default:
-                        System.out.println("- Error: Please, select a valid option. -");
+                        System.out.println("Error: invalid option.");
                 }
             }
         }
-        if (!updatedAttempt){
+        if (!idChecker){
             throw new BookNotFoundException("Book with ID #" + id + " not found.");
         }
-
     }
 
-    public void updateTitle(Integer id){
-        for (Book book : this.stock){
-            if (book.getId() == id){
-                System.out.println("- Changing Title from Book #" + id + " -");
-                System.out.print("\n- Enter new title: ");
-                String title = input.next();
-                if (title != null && !title.equals(book.getTitle()) && !title.isEmpty()){
-                    book.setTitle(title);
-                    System.out.println("- Changed Title to Book #" + id + " -");
-                    break;
-                }
-                else{
-                    throw new BookException("Invalid title entered.");
-                }
-            }
-            else{
-                throw new BookNotFoundException("Book with ID #" + id + " not found.");
-            }
-
+    private void updateTitle(Integer id, Book book){
+        System.out.println("\n- Changing Title from Book #" + id + " -");
+        System.out.print("\n- Enter new title: ");
+        String title = input.nextLine();
+        if (title != null && !title.equals(book.getTitle()) && !title.isEmpty()){
+            book.setTitle(title);
+            System.out.println("- Changed Title to Book #" + id + " -");
+        }
+        else{
+            throw new BookException("Invalid title entered.");
         }
     }
 
-}
+    private void updateAuthor(Integer id, Book book){
+        System.out.println("\n- Changing Author from Book #" + id + " -");
+        System.out.print("\n- Enter new author: ");
+        String author = input.nextLine();
+        if (author != null && !author.equals(book.getAuthor()) && !author.isEmpty()){
+            book.setAuthor(author);
+            System.out.println("- Changed Author to Book #" + id + " -");
+        }
+        else{
+            throw new BookException("Invalid name entered.");
+        }
+
+    }
+
+    private void updateYear(Integer id, Book book){
+        System.out.println("\n- Changing Year from Book #" + id + " -");
+        System.out.print("\n- Enter new year: ");
+        int year = input.nextInt();
+        if (year != book.getYear() && year > 0){
+            book.setYear(year);
+        }
+        else{
+            throw new BookException("Invalid year entered.");
+        }
+    }
+
+    private void updatePages(Integer id, Book book){
+        System.out.println("\n- Changing Number of Pages from Book #" + id + " -");
+        System.out.print("\n- Enter new number of pages: ");
+        int pages = input.nextInt();
+        if (pages != book.getNumberOfPages() && pages > 0){
+            book.setNumberOfPages(pages);
+        }
+        else{
+            throw new BookException("Invalid number of pages entered.");
+        }
+    }
+
+    private void updateGenre(Integer id, Book book){
+        System.out.println("\n- Changing Genre from Book #" + id + " -");
+        System.out.print("\n- Enter new genre: ");
+        String GenreStr = input.next();
+        try{
+            Genre genre = Genre.valueOf(GenreStr.toUpperCase());
+            book.setGenre(genre);
+        }
+        catch (BookException e){
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    }
+
+
