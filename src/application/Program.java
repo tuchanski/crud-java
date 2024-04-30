@@ -1,8 +1,7 @@
 package application;
 
-import model.entities.Book;
+import model.entities.BookFactory;
 import model.entities.Library;
-import model.entities.enums.Genre;
 import model.exceptions.BookException;
 import model.exceptions.BookNotFoundException;
 import model.exceptions.DuplicateBookException;
@@ -33,52 +32,25 @@ public class Program {
             switch (menu) {
 
                 case 1:
-                    System.out.println("\n- Insert Book Mode -");
-
-                    System.out.print("- Enter ID: ");
-                    int id = input.nextInt();
-                    input.nextLine();
-
-                    System.out.print("- Enter title: ");
-                    String title = input.nextLine();
-
-                    System.out.print("- Enter author: ");
-                    String author = input.nextLine();
-
-                    System.out.print("- Enter year: ");
-                    int year = input.nextInt();
-
-                    System.out.print("- Enter number of pages: ");
-                    int pages = input.nextInt();
-                    input.nextLine();
-
-                    System.out.print("- Enter genre: ");
-                    String genreString = input.nextLine();
-                    Genre genre = Genre.valueOf(genreString);
-
-                    Book book = new Book(id, title, author, year, pages, genre);
-
                     try {
-                        library.addBook(book);
+                        BookFactory bf = new BookFactory();
+                        library.addBook(bf.createBook());
                     }
                     catch (BookException | DuplicateBookException | BookNotFoundException e) {
                         System.out.println("Error: " + e.getMessage());
                     }
-
                     break;
 
                 case 2:
                     System.out.println("\n- Remove Book Mode -");
                     System.out.print("- Enter ID: ");
                     int removeId = input.nextInt();
-
                     try {
                         library.removeBookById(removeId);
                     }
                     catch (BookException | BookNotFoundException e) {
                         System.out.println("Error: " + e.getMessage());
                     }
-
                     break;
 
                 case 3:
@@ -91,14 +63,12 @@ public class Program {
                     catch (BookException | BookNotFoundException e) {
                         System.out.println("Error: " + e.getMessage());
                     }
-
                     break;
 
                 case 4:
                     System.out.println("\n- Search Book Mode -");
                     System.out.print("- Enter ID: ");
                     int searchId = input.nextInt();
-
                     try {
                         library.getBookById(searchId);
                     }
