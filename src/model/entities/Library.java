@@ -1,6 +1,7 @@
 package model.entities;
 
 import model.entities.enums.Genre;
+import model.exceptions.BookException;
 import model.exceptions.BookNotFoundException;
 import model.exceptions.DuplicateBookException;
 
@@ -70,29 +71,15 @@ public class Library {
                 System.out.println("\n- Updating Book -" +
                         "\n[1] - Title" + "\n[2] - Author" + "\n[3] - Year" +
                         "\n[4] - Number of Pages" + "\n[5] - Genre" + "\n[0] - Return to Menu");
+                System.out.print("\nEnter your choice: ");
 
                 int mode = input.nextInt();
                 switch(mode){
                     case 0:
-                        System.out.println("- Exiting... -");
+                        System.out.println("- Exiting from Update Mode -");
                         return;
                     case 1:
-                        try{
-                            System.out.println("- Changing Title from Book #" + id + " -");
-                            System.out.print("\n- Enter new title: ");
-                            String title = input.next();
-
-                            if (title != null && !title.equals(book.getTitle()) && !title.isEmpty()){
-                                book.setTitle(title);
-                                System.out.println("- Changed Title to Book #" + id + " -");
-                                break;
-                            }
-
-                        }
-                        catch(Exception e){
-                            System.out.println("- Error: " + e.getMessage());
-                            break;
-                        }
+                        updateTitle(id);
 
                     case 2:
                         try{
@@ -107,7 +94,7 @@ public class Library {
                             }
 
                         }
-                        catch(Exception e){
+                        catch(BookException e){
                             System.out.println("- Error: " + e.getMessage());
                             break;
                         }
@@ -122,7 +109,7 @@ public class Library {
                                 break;
                             }
                         }
-                        catch(Exception e){
+                        catch(BookException e){
                             System.out.println("- Error: " + e.getMessage());
                         }
 
@@ -136,7 +123,7 @@ public class Library {
                                 break;
                             }
                         }
-                        catch(Exception e){
+                        catch(BookException e){
                             System.out.println("- Error: " + e.getMessage());
                         }
 
@@ -150,7 +137,7 @@ public class Library {
                             book.setGenre(genre);
                             break;
                         }
-                        catch(Exception e){
+                        catch(BookException e){
                             System.out.println("- Error: " + e.getMessage());
                             break;
                         }
@@ -162,6 +149,29 @@ public class Library {
         }
         if (!updatedAttempt){
             throw new BookNotFoundException("Book with ID #" + id + " not found.");
+        }
+
+    }
+
+    public void updateTitle(Integer id){
+        for (Book book : this.stock){
+            if (book.getId() == id){
+                System.out.println("- Changing Title from Book #" + id + " -");
+                System.out.print("\n- Enter new title: ");
+                String title = input.next();
+                if (title != null && !title.equals(book.getTitle()) && !title.isEmpty()){
+                    book.setTitle(title);
+                    System.out.println("- Changed Title to Book #" + id + " -");
+                    break;
+                }
+                else{
+                    throw new BookException("Invalid title entered.");
+                }
+            }
+            else{
+                throw new BookNotFoundException("Book with ID #" + id + " not found.");
+            }
+
         }
     }
 
