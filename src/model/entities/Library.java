@@ -66,7 +66,7 @@ public class Library {
         for (Book book : this.stock){
             if (book.getId().equals(id)){
                 idChecker = true;
-                System.out.println("- Updating Book #" + id + " -");
+                System.out.println("\n- Updating Book #" + id + " -");
                 System.out.println("""
                         [1] - Update Title
                         [2] - Update Author
@@ -109,7 +109,7 @@ public class Library {
     private void updateTitle(Integer id, Book book){
         System.out.println("\n- Changing Title from Book #" + id + " -");
         System.out.print("\n- Enter new title: ");
-        String title = input.nextLine();
+        String title = input.next();
         if (title != null && !title.equals(book.getTitle()) && !title.isEmpty()){
             book.setTitle(title);
             System.out.println("- Changed Title to Book #" + id + " -");
@@ -122,7 +122,7 @@ public class Library {
     private void updateAuthor(Integer id, Book book){
         System.out.println("\n- Changing Author from Book #" + id + " -");
         System.out.print("\n- Enter new author: ");
-        String author = input.nextLine();
+        String author = input.next();
         if (author != null && !author.equals(book.getAuthor()) && !author.isEmpty()){
             book.setAuthor(author);
             System.out.println("- Changed Author to Book #" + id + " -");

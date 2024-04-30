@@ -127,6 +127,6 @@ public class Program {
         }
         while (menu != 0);
         input.close();
-        System.out.println("- Thanks for using Lapa's Library! This is an OOP project designed by Tuchanski.");
+        System.out.println("\n- Thanks for using Lapa's Library! ^_^");
     }
 }
