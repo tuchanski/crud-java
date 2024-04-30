@@ -15,6 +15,17 @@ public class Library {
 
     public Library(){}
 
+    public static void getMenu(){
+        System.out.println("""
+                    \nWhat would you like to do?
+                    1. Insert Book
+                    2. Remove Book
+                    3. Update Book
+                    4. Search Book
+                    5. Book Stock List
+                    0. Exit""");
+    }
+
     private final List<Book> stock = new ArrayList<>();
 
     public void getBooks(){
@@ -29,7 +40,7 @@ public class Library {
         }
     }
 
-    public void getBookById(Integer id){
+    public void getBook(Integer id){
         for (Book book : this.stock){
             if (book.getId().equals(id)){
                 System.out.println(book);
@@ -48,7 +59,7 @@ public class Library {
         this.stock.add(book);
     }
 
-    public void removeBookById(Integer id){
+    public void removeBook(Integer id){
         boolean removed = this.stock.removeIf(book -> book.getId().equals(id));
         if (removed){
             System.out.println("Book #" + id + " removed successfully.");
