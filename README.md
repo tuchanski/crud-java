@@ -5,7 +5,6 @@ Welcome to the Library Management System! This project provides a comprehensive 
 
 - Java: The primary programming language used for developing the backend logic of the application.
 
-- IntelliJ IDEA: The integrated development environment (IDE) used for coding, debugging, and managing the project. 
 
 ## Features
 
@@ -24,7 +23,7 @@ To get started with the Library Management System, follow these steps:
 1. Clone this repository to your local machine.
 
 ```bash
-git clone https://github.com/tuchanski/library-management.git
+git clone https://github.com/tuchanski/crud-java.git
 ```
 
 2. Navigate to the project directory:
