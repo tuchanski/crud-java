@@ -86,3 +86,7 @@ Book{id=1, title='Jojo's Bizarre Adventure', author='Hirohiko Araki', year=1989,
 Contributions are welcome! If you have any suggestions, feature requests, or bug reports, please open an issue or submit a pull request.
 
 Happy managing your library!
+
+## Author
+
+- [Guilherme Tuchanski Rocha | GitHub](https://github.com/tuchanski)
