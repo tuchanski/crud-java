@@ -1,4 +1,4 @@
-# CRUD JAVA - Library Management
+# CRUD JAVA - Library Management 📚
 Welcome to the Library Management System! This project provides a comprehensive solution for efficiently managing your book inventory. With this system, you can perform CRUD operations (Create, Read, Update, Delete) on your book collection, making it easy to keep track of your library. 
 
 ## Technologies
