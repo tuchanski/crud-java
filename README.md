@@ -29,7 +29,7 @@ git clone https://github.com/tuchanski/crud-java.git
 2. Navigate to the project directory:
 
 ```bash
-cd library-management
+cd crud-java
 ```
 
 3. Compile the program:
